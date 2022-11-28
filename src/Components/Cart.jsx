@@ -1,55 +1,67 @@
-import { AiFillDelete } from "react-icons/ai";
-import { useDispatch, useSelector } from "react-redux";
+import React from 'react';
+import CartItems from './CartItems';
+
+import { useDispatch, useSelector } from 'react-redux';
+
+
+
+
+
 
 const Cart = () => {
-    const { cartItems, subTotal, tax, shipping, total } = useSelector(
-        (state) => state.cart
-    );
+
+    const { cartItems, subTotal, shipping, tax, total } = useSelector((state) => state.cart)
     const dispatch = useDispatch();
 
     const increment = (id) => {
         dispatch({
-            type: "addToCart",
-            payload: { id },
+            type: 'addToCart',
+            payload: { id }
         });
-        dispatch({ type: "calculatePrice" });
-    };
+        dispatch({ type: 'calculatePrice' });
+    }
+
     const decrement = (id) => {
         dispatch({
-            type: "decrement",
-            payload: id,
-        });
+            type: 'decrement',
+            payload: id
+        })
 
-        dispatch({ type: "calculatePrice" });
-    };
+        dispatch({ type: 'calculatePrice' });
+    }
+
     const deleteHandler = (id) => {
         dispatch({
-            type: "deleteFromCart",
-            payload: id,
+            type: 'deleteHandler',
+            payload: id
         });
-        dispatch({ type: "calculatePrice" });
-    };
+        dispatch({ type: 'calculatePrice' });
+    }
+
 
     return (
-        <div className="cart">
+        <div className='cart'>
+
             <main>
-                {cartItems.length > 0 ? (
-                    cartItems.map((i) => (
-                        <CartItem
-                            imgSrc={i.imgSrc}
-                            name={i.name}
-                            price={i.price}
-                            qty={i.quantity}
-                            id={i.id}
-                            key={i.id}
-                            decrement={decrement}
+
+                {
+                    cartItems.length > 0 ? cartItems.map((items) => (
+                        <CartItems
+                            key={items.id}
+                            imgSrc={items.imgSrc}
+                            name={items.name}
+                            price={items.price}
+                            qty={items.quantity}
+                            id={items.id}
                             increment={increment}
+                            decrement={decrement}
                             deleteHandler={deleteHandler}
+
+
                         />
-                    ))
-                ) : (
-                    <h1>No Items Yet</h1>
-                )}
+                    )) : (<h1>No Items in Cart</h1>)
+                }
+
             </main>
 
             <aside>
@@ -58,35 +70,9 @@ const Cart = () => {
                 <h2>Tax: ${tax}</h2>
                 <h2>Total: ${total}</h2>
             </aside>
+
         </div>
-    );
-};
-
-const CartItem = ({
-    imgSrc,
-    name,
-    price,
-    qty,
-    decrement,
-    increment,
-    deleteHandler,
-    id,
-}) => (
-    <div className="cartItem">
-        <img src={imgSrc} alt="Item" />
-        <article>
-            <h3>{name}</h3>
-            <p>${price}</p>
-        </article>
-
-        <div>
-            <button onClick={() => decrement(id)}>-</button>
-            <p>{qty}</p>
-            <button onClick={() => increment(id)}>+</button>
-        </div>
-
-        <AiFillDelete onClick={() => deleteHandler(id)} />
-    </div>
-);
+    )
+}
 
 export default Cart;
