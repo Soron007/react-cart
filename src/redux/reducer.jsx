@@ -35,6 +35,8 @@ export const cartReducer = createReducer({
                         i.quantity -= 1;
                     }
                 })
+            } else {
+                state.cartItems = state.cartItems.filter(i => i.id !== action.payload)
             }
 
         },
