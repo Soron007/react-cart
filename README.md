@@ -1,6 +1,6 @@
-# Getting Started with Create React App
+# Shopping cart using ReactJS and SCSS
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+deployed at: https://react-shopping-cart-seven-theta.vercel.app/
 
 ## Available Scripts
 
